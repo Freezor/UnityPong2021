@@ -64,12 +64,9 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -81,9 +78,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+This is an example game project which represents the classical Pong game. It is for learning purposes and may not be actively maintained. Use at your own risk for any own projects.
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `Freezor`, `UnityPong2021`, `twitter_handle`, `linkedin_username`, `email`, `email_client`, `Unity Pong`, `project_description`
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -132,8 +128,6 @@ Project Link: [https://github.com/Freezor/UnityPong2021](https://github.com/Free
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
 * []()
 
 <p align="right">(<a href="#top">back to top</a>)</p>
