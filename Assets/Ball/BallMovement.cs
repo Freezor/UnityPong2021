@@ -11,7 +11,8 @@ namespace Ball
         public float speed = InitialSpeed;
         public int speedIncreaseTick = 1;
         public int secondsAfterBallSpeedIncreases = 3;
-
+        public int delaySecondsAfterScoring = 2;
+        
         public bool GameRunning { get; set; }
         private Rigidbody2D Ball { get; set; }
 
@@ -79,16 +80,12 @@ namespace Ball
                 }
                 case "WallLeft":
                 {
-                    //GameManager.Instance.Score("WallLeft");
-                    ResetBall();
-                    StartBall();
+                    StartCoroutine(ScoreAndRestart("Player2"));
                     break;
                 }
                 case "WallRight":
                 {
-                    //GameManager.Instance.Score("WallRight");
-                    ResetBall();
-                    StartBall();
+                    StartCoroutine(ScoreAndRestart("Player1"));
                     break;
                 }
             }
@@ -117,6 +114,15 @@ namespace Ball
             // ||
             // || -1 <- at the bottom of the racket
             return (ballPos.y - racketPos.y) / racketHeight;
+        }
+        
+        
+        IEnumerator ScoreAndRestart(string playerName)
+        {
+            GameManager.Score("Player1");
+            ResetBall();
+            yield return new WaitForSeconds(delaySecondsAfterScoring);
+            StartBall();
         }
     }
 }
