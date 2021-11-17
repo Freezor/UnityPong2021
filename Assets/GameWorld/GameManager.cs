@@ -10,10 +10,13 @@ namespace GameWorld
 
         public static GameManager Instance { get; private set; }
     
-        public static OpponentType OpponentType { get; private set; }
+        public static OpponentType OpponentType { get; set; }
 
         public void Awake()
         {
+            Player1Score = 0;
+            Player2Score = 0;
+            
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);

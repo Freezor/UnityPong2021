@@ -120,7 +120,7 @@ namespace Ball
         
         IEnumerator ScoreAndRestart(string playerName)
         {
-            GameManager.Score("Player1");
+            GameManager.Score(playerName);
             ResetBall();
             yield return new WaitForSeconds(delaySecondsAfterScoring);
             StartBall();
