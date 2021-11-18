@@ -627,7 +627,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backgroundMusic: {fileID: 8300000, guid: 3eb3349832ee15c448a05bfcd3a8fbce, type: 3}
-  _volume: 1
+  volume: 0.64
+  maxScore: 15
+  gameOverScreen: GameOverScene
 --- !u!4 &432424613
 Transform:
   m_ObjectHideFlags: 0

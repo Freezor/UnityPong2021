@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace GameWorld
@@ -7,7 +8,9 @@ namespace GameWorld
     public class GameManager : MonoBehaviour
     {
         [SerializeField] AudioClip backgroundMusic;
-        [SerializeField] [Range(0.0f, 1.0f)] float _volume = 1;
+        [SerializeField] [Range(0.0f, 1.0f)] float volume = 1;
+        [SerializeField] int maxScore = 15;
+        [SerializeField] string gameOverScreen = "";
 
         public static int Player1Score = 0;
         public static int Player2Score = 0;
@@ -47,13 +50,18 @@ namespace GameWorld
 
             AudioSource.playOnAwake = false;
             AudioSource.loop = true;
-            AudioSource.volume = _volume;
+            AudioSource.volume = volume;
             AudioSource.Play();
         }
 
         private static void InitializeOpponentType()
         {
             var opponentType = PlayerPrefs.GetString($"{nameof(OpponentType)}");
+            if (string.IsNullOrEmpty(opponentType))
+            {
+                opponentType = OpponentType.AI.ToString();
+            }
+
             Enum.TryParse(opponentType, out OpponentType opponentTypeEnum);
             OpponentType = opponentTypeEnum;
         }
@@ -72,7 +80,35 @@ namespace GameWorld
             {
                 Player2Score++;
             }
+
+            Instance.CheckWinCondition();
         }
+
+        private void CheckWinCondition()
+        {
+            if (Player1Score < maxScore && Player2Score < maxScore)
+            {
+                return;
+            }
+
+            if (Player1Score < 15)
+            {
+                if (OpponentType == OpponentType.Player)
+                {
+                    PlayerPrefs.SetString("Winner", "Player1");
+                }
+
+                PlayerPrefs.SetString("Winner", "AI");
+            }
+            else
+            {
+                PlayerPrefs.SetString("Winner", "Player1");
+            }
+
+            Instance.AudioSource.mute = true;
+            SceneManager.LoadScene(gameOverScreen);
+        }
+
 
         public static int GetPlayerScore(string playerName)
         {
