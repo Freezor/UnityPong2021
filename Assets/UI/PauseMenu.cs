@@ -1,13 +1,23 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 namespace UI
 {
     public class PauseMenu : MonoBehaviour
     {
         [SerializeField] private GameObject pauseMenu;
+        [SerializeField] AudioClip audioClip;
 
         private bool _gameIsPaused = false;
+
+        public AudioSource audioSource { get; set; }
+
+        private void Start()
+        {
+            audioSource = gameObject.GetComponent<AudioSource>();
+        }
 
         private void Update()
         {
@@ -29,6 +39,7 @@ namespace UI
 
         public void Pause()
         {
+            audioSource.PlayOneShot(audioClip);
             pauseMenu.SetActive(true);
             Time.timeScale = 0.0f;
         }

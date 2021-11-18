@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using GameWorld;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -7,13 +9,16 @@ namespace Ball
 {
     public class BallMovement : MonoBehaviour
     {
+        [SerializeField] List<AudioClip> AudioClip;
+
         private const int InitialSpeed = 30;
 
         public float speed = InitialSpeed;
         public int speedIncreaseTick = 1;
         public int secondsAfterBallSpeedIncreases = 3;
         public int delaySecondsAfterScoring = 2;
-        
+
+        public AudioSource AudioSource { get; set; }
         public bool GameRunning { get; set; }
         private Rigidbody2D Ball { get; set; }
 
@@ -23,7 +28,9 @@ namespace Ball
             Ball = GetComponent<Rigidbody2D>();
             StartBall();
             StartCoroutine(ExampleCoroutine());
+            AudioSource = gameObject.GetComponent<AudioSource>();
         }
+
 
         IEnumerator ExampleCoroutine()
         {
@@ -67,6 +74,10 @@ namespace Ball
             //   col.transform.position is the racket's position
             //   col.collider is the racket's collider
 
+            AudioSource.clip = GetNextAudioClip();
+
+            AudioSource.Play();
+
             switch (collision2D.gameObject.name)
             {
                 case "RacketLeft":
@@ -90,6 +101,13 @@ namespace Ball
                     break;
                 }
             }
+        }
+
+        private AudioClip GetNextAudioClip()
+        {
+            return AudioSource.clip == null 
+                ? AudioClip.First() 
+                : AudioClip.Single(x => x != AudioSource.clip);
         }
 
         private void CalculateHitFactor(Collision2D col, int xAxisValue)
@@ -116,8 +134,8 @@ namespace Ball
             // || -1 <- at the bottom of the racket
             return (ballPos.y - racketPos.y) / racketHeight;
         }
-        
-        
+
+
         IEnumerator ScoreAndRestart(string playerName)
         {
             GameManager.Score(playerName);
