@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameWorld
 {
@@ -15,12 +16,7 @@ namespace GameWorld
 
         public static OpponentType OpponentType { get; set; }
 
-        private AudioSource _audioSource;
-
-        private void Start()
-        {
-            _audioSource = gameObject.GetComponent<AudioSource>();
-        }
+        public AudioSource AudioSource { get; private set; }
 
         public void Awake()
         {
@@ -37,6 +33,7 @@ namespace GameWorld
                 DontDestroyOnLoad(gameObject);
             }
 
+            AudioSource = gameObject.GetComponent<AudioSource>();
             InitializeOpponentType();
             InitializeBackgroundMusic();
         }
@@ -45,13 +42,13 @@ namespace GameWorld
         {
             if (backgroundMusic != null)
             {
-                _audioSource.clip = backgroundMusic;
+                AudioSource.clip = backgroundMusic;
             }
 
-            _audioSource.playOnAwake = false;
-            _audioSource.loop = true;
-            _audioSource.volume = _volume;
-            _audioSource.Play();
+            AudioSource.playOnAwake = false;
+            AudioSource.loop = true;
+            AudioSource.volume = _volume;
+            AudioSource.Play();
         }
 
         private static void InitializeOpponentType()
